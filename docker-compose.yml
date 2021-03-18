@@ -1,0 +1,29 @@
+version: '3.4'
+
+x-base: &x-base
+  image: node:lts-alpine
+  working_dir: $PWD
+  volumes:
+    - $PWD:$PWD
+  environment:
+    NODE_ENV: development
+
+services:
+  test:
+    <<: *x-base
+    command: sh -c "apk add git -q && npm run test:watch"
+
+  dev:
+    <<: *x-base
+    command: npm run dev
+    ports:
+      - 4000:4000
+      - 9229:9229
+
+  app:
+    <<: *x-base
+    command: npm start
+    environment:
+      NODE_ENV: production
+    ports:
+      - 4000:4000

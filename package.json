@@ -1,0 +1,80 @@
+{
+  "name": "ddd-sample",
+  "version": "1.0.0",
+  "description": "DDD Sample study in typescript",
+  "main": "dist/index.js",
+  "author": "Manuel Bertelli",
+  "license": "ISC",
+  "scripts": {
+    "compile": "tsc",
+    "dev": "nodemon src/index.ts",
+    "start": "node dist/index.js",
+    "test": "jest",
+    "test:watch": "jest --watch --colors",
+    "up": "docker-compose up"
+  },
+  "jest": {
+    "preset": "jest-preset-typescript",
+    "roots": [
+      "src/"
+    ]
+  },
+  "eslintConfig": {
+    "env": {
+      "es2021": true,
+      "node": true,
+      "jest": true
+    },
+    "extends": [
+      "standard"
+    ],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+      "ecmaVersion": 12,
+      "sourceType": "module"
+    },
+    "plugins": [
+      "@typescript-eslint"
+    ]
+  },
+  "nodemonConfig": {
+    "execMap": {
+      "ts": "node --inspect=0.0.0.0:9229 --require ts-node/register"
+    },
+    "watch": [
+      "src/"
+    ],
+    "ignore": [
+      "**/__tests__/*"
+    ]
+  },
+  "devDependencies": {
+    "@tsconfig/recommended": "^1.0.1",
+    "@types/assert": "^1.5.4",
+    "@types/express": "^4.17.11",
+    "@types/jest": "^26.0.20",
+    "@types/node": "^14.14.34",
+    "@typescript-eslint/eslint-plugin": "^4.17.0",
+    "@typescript-eslint/parser": "^4.17.0",
+    "eslint": "^7.22.0",
+    "eslint-config-prettier": "^8.1.0",
+    "eslint-config-standard": "^16.0.2",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^3.3.1",
+    "eslint-plugin-promise": "^4.3.1",
+    "jest": "^26.6.3",
+    "jest-preset-typescript": "^1.2.0",
+    "nodemon": "^2.0.7",
+    "prettier": "^2.2.1",
+    "prettier-eslint": "^12.0.0",
+    "ts-jest": "^26.5.4",
+    "ts-node": "^9.1.1",
+    "typescript": "^4.1.5"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "express-graphql": "^0.12.0",
+    "graphql": "^15.5.0"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "extends": "@tsconfig/recommended/tsconfig.json",
+  "exclude": ["node_modules", "dist"],
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "baseUrl": ".",
+    "outDir": "dist",
+    "sourceMap": true,
+    "paths": {
+      "#/*": ["src/*"]
+    }
+  }
+}
