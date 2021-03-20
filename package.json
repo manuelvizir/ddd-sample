@@ -8,12 +8,15 @@
   "scripts": {
     "compile": "tsc",
     "dev": "nodemon src/index.ts",
+    "lint:watch": "esw -w --ext .ts --fix --color src/",
     "start": "node dist/index.js",
     "test": "jest",
+    "test:coverage": "jest --collect-coverage",
     "test:watch": "jest --watch --colors",
     "up": "docker-compose up"
   },
   "jest": {
+    "coverageDirectory": "coverage/",
     "preset": "jest-preset-typescript",
     "roots": [
       "src/"
@@ -21,20 +24,23 @@
   },
   "eslintConfig": {
     "env": {
-      "es2021": true,
-      "node": true,
+      "es6": true,
       "jest": true
     },
-    "extends": [
-      "standard"
-    ],
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
-      "ecmaVersion": 12,
+      "ecmaVersion": 2021,
       "sourceType": "module"
     },
+    "extends": [
+      "standard",
+      "plugin:prettier/recommended",
+      "plugin:unicorn/recommended"
+    ],
     "plugins": [
-      "@typescript-eslint"
+      "@typescript-eslint",
+      "prettier",
+      "unicorn"
     ]
   },
   "nodemonConfig": {
@@ -59,10 +65,9 @@
     "eslint": "^7.22.0",
     "eslint-config-prettier": "^8.1.0",
     "eslint-config-standard": "^16.0.2",
-    "eslint-plugin-import": "^2.22.1",
-    "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^3.3.1",
-    "eslint-plugin-promise": "^4.3.1",
+    "eslint-plugin-unicorn": "^28.0.2",
+    "eslint-watch": "^7.0.0",
     "jest": "^26.6.3",
     "jest-preset-typescript": "^1.2.0",
     "nodemon": "^2.0.7",

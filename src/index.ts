@@ -1,12 +1,12 @@
-import express from 'express'
-import { graphqlHTTP } from 'express-graphql'
-import { buildSchema } from 'graphql'
-import { ProductManagementServiceImpl } from './application/impl/ProductManagementServiceImpl'
-import { SKU } from './domain/model/product/SKU'
-import { Variation } from './domain/model/product/Variation'
-import { ProductRepositoryInMemory } from './infrastructure/persistence/inMemory/ProductRepositoryMemory'
+import express from "express";
+import { graphqlHTTP } from "express-graphql";
+import { buildSchema } from "graphql";
+import { ProductManagementServiceImpl } from "./application/impl/product-management-service-impl";
+import { SKU } from "./domain/model/product/sku";
+import { Variation } from "./domain/model/product/variation";
+import { ProductRepositoryInMemory } from "./infrastructure/persistence/in-memory/product-repository-memory";
 
-const repository = new ProductRepositoryInMemory()
+const repository = new ProductRepositoryInMemory();
 
 // Construct a schema, using GraphQL schema language
 const schema = buildSchema(`
@@ -54,72 +54,72 @@ const schema = buildSchema(`
   type Statement {
     transactions: [Transactions]
   }
-`)
+`);
 
 type Product = {
-  id: SKU
-  variations: Variation[]
+  id: SKU;
+  variations: Variation[];
   timestamp: {
-    createdAt?: Date
-    updatedAt?: Date
-  }
-}
+    createdAt?: Date;
+    updatedAt?: Date;
+  };
+};
 
 type AccountInput = {
   input: {
-    id: string
-  }
-}
+    id: string;
+  };
+};
 
 type ProductInput = {
   input: {
-    id: string
-  }
-}
+    id: string;
+  };
+};
 
 type StatementInput = {
   input: {
-    startDate: string
-    nextPageToken: string
-  }
-}
+    startDate: string;
+    nextPageToken: string;
+  };
+};
 
 // The root provides a resolver function for each API endpoint
 const rootValue = {
   hello: () => {
-    return 'Hello world!'
+    return "Hello world!";
   },
   statement: ({ input: { startDate, nextPageToken } }: StatementInput) => {
-    console.log({ startDate, nextPageToken })
+    console.log({ startDate, nextPageToken });
     return {
       transactions: [
         {
-          id: '123',
-          date: '12312'
-        }
-      ]
-    }
+          id: "123",
+          date: "12312",
+        },
+      ],
+    };
   },
   create: ({ input: { id } }: ProductInput): Product => {
-    const sku = new SKU(id)
-    new ProductManagementServiceImpl(repository).create(sku)
-    const returned = repository.find(sku)
-    return returned
+    const sku = new SKU(id);
+    new ProductManagementServiceImpl(repository).createProduct(sku);
+    const returned = repository.findBy(sku);
+    return returned;
   },
-  account: ({ input: { id } }: AccountInput, ...args: any) => {
-    console.log({ id, args })
-  }
-}
+  account: ({ input: { id } }: AccountInput, ...arguments_: any) => {
+    console.log({ id, args: arguments_ });
+  },
+};
 
-const app = express()
+const app = express();
 app.use(
-  '/graphql',
+  "/graphql",
   graphqlHTTP({
     schema,
     rootValue,
-    graphiql: true
+    graphiql: true,
   })
-)
+);
 
-app.listen(4000)
-console.log('Running a GraphQL API server at http://localhost:4000/graphql')
+app.listen(4000);
+console.log("Running a GraphQL API server at http://localhost:4000/graphql");

@@ -9,6 +9,10 @@ x-base: &x-base
     NODE_ENV: development
 
 services:
+  lint:
+    <<: *x-base
+    command: npm run lint:watch
+
   test:
     <<: *x-base
     command: sh -c "apk add git -q && npm run test:watch"
