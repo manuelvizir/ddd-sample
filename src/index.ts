@@ -87,6 +87,8 @@ type StatementInput = {
 // The root provides a resolver function for each API endpoint
 const rootValue = {
   hello: () => {
+    console.log("está muito rápido");
+
     return "Hello world!";
   },
   statement: ({ input: { startDate, nextPageToken } }: StatementInput) => {
